@@ -1,0 +1,10 @@
+Lucas,0,5
+Conlon,0,63
+Rob,0,-103
+Jon,0,148
+Soren,0,0
+MJ,0,0
+Martin,0,0
+Josiah,0,0
+Kyle,0,0
+Brady,0,0
