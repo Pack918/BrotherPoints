@@ -4,95 +4,128 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fraternal Points Management System</title>
+    <style>
+        /* CSS Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #b3e0ff;
+        }
+        .container {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .panel {
+            display: none;
+        }
+        .error {
+            color: red;
+            font-size: 14px;
+        }
+    </style>
 </head>
 <body>
-    <div id="root">
-        <!-- Login Frame -->
-        <div id="loginFrame">
+    <div class="container">
+        <h1>Fraternal Points Management System</h1>
+        <div id="login-form">
+            <form id="loginForm">
+                <label for="username">Username:</label><br>
+                <input type="text" id="username" name="username"><br>
+                <label for="password">Password:</label><br>
+                <input type="password" id="password" name="password"><br><br>
+                <button type="submit">Login</button>
+            </form>
+        </div>
+        <div id="admin-panel" class="panel">
+            <h2>Admin Panel</h2>
+            <label for="userList">Select User:</label><br>
+            <select id="userList" name="userList"></select><br>
+            <label for="points">Points:</label><br>
+            <input type="number" id="points" name="points"><br><br>
+            <button id="addPoints">Add Points</button>
+            <button id="removePoints">Remove Points</button><br><br>
+            <button id="logoutAdmin">Logout</button>
+        </div>
+        <div id="user-panel" class="panel">
+            <h2>User Panel</h2>
+            <p>Welcome, <span id="loggedInUser"></span>!</p>
+            <p>Your balance: <span id="userBalance"></span></p>
+            <label for="recipient">Recipient:</label><br>
+            <select id="recipient" name="recipient"></select><br>
+            <label for="transferPoints">Points:</label><br>
+            <input type="number" id="transferPoints" name="transferPoints"><br><br>
+            <button id="transferButton">Transfer Points</button><br><br>
+            <button id="logoutUser">Logout</button>
+        </div>
+        <div id="leaderboard-panel" class="panel">
             <h2>Leaderboard</h2>
             <textarea id="leaderboardText" rows="10" cols="30" readonly></textarea>
-            <label for="username">Username:</label>
-            <input type="text" id="username">
-            <label for="password">Password:</label>
-            <input type="password" id="password">
-            <button onclick="login()">Login</button>
-        </div>
-
-        <!-- Admin Frame -->
-        <div id="adminFrame" style="display: none;">
-            <h2>Admin Panel</h2>
-            <label for="userList">Select User:</label>
-            <select id="userList" size="10"></select>
-            <label for="points">Points:</label>
-            <input type="number" id="points">
-            <button onclick="adminAction('Add')">Add</button>
-            <button onclick="adminAction('Remove')">Remove</button>
-            <button onclick="logout()">Logout</button>
-        </div>
-
-        <!-- User Frame -->
-        <div id="userFrame" style="display: none;">
-            <h2 id="usernameLabel"></h2>
-            <p id="balanceLabel"></p>
-            <div id="transferFrame">
-                <label for="recipient">Recipient:</label>
-                <select id="recipient" onchange="updateTransferOptions()"></select>
-                <label for="transferPoints">Points:</label>
-                <input type="number" id="transferPoints">
-                <button onclick="sendPoints()">Transfer</button>
-                <button onclick="logout()">Logout</button>
-            </div>
         </div>
     </div>
     <script>
-        let current_user = null;
+        // JavaScript Logic
+        document.addEventListener("DOMContentLoaded", function() {
+            // DOM elements
+            const loginForm = document.getElementById("loginForm");
+            const adminPanel = document.getElementById("admin-panel");
+            const userList = document.getElementById("userList");
+            const pointsInput = document.getElementById("points");
+            const addPointsButton = document.getElementById("addPoints");
+            const removePointsButton = document.getElementById("removePoints");
+            const logoutAdminButton = document.getElementById("logoutAdmin");
+            const userPanel = document.getElementById("user-panel");
+            const loggedInUserSpan = document.getElementById("loggedInUser");
+            const userBalanceSpan = document.getElementById("userBalance");
+            const recipientSelect = document.getElementById("recipient");
+            const transferPointsInput = document.getElementById("transferPoints");
+            const transferButton = document.getElementById("transferButton");
+            const logoutUserButton = document.getElementById("logoutUser");
+            const leaderboardPanel = document.getElementById("leaderboard-panel");
+            const leaderboardText = document.getElementById("leaderboardText");
+            const errorDiv = document.createElement("div");
+            errorDiv.classList.add("error");
 
-        function authenticate(username, password) {
-            if (username === "admin" && password === "12345") {
-                return "admin";
+            // Show error message
+            function showError(message) {
+                errorDiv.textContent = message;
+                loginForm.appendChild(errorDiv);
             }
-            // Code to read user_accounts.txt and authenticate user
-        }
 
-        function displayBalance(username) {
-            // Code to read user_accounts.txt and display balance
-        }
+            // Hide all panels
+            function hideAllPanels() {
+                adminPanel.style.display = "none";
+                userPanel.style.display = "none";
+                leaderboardPanel.style.display = "none";
+            }
 
-        function updateBalance(username, points) {
-            // Code to update user balance in user_accounts.txt
-        }
+            // Authenticate user
+            function authenticate(username, password) {
+                if (username === "admin" && password === "12345") {
+                    return "admin";
+                }
+                // Replace with actual authentication logic here
+                // For simplicity, always return a valid username
+                return username;
+            }
 
-        function updateLeaderboard() {
-            // Code to update leaderboard
-        }
-
-        function logout() {
-            // Code to logout user
-        }
-
-        function sendPoints() {
-            // Code to send points to recipient
-        }
-
-        function updateUserList() {
-            // Code to update user list
-        }
-
-        function createRecipientList() {
-            // Code to create recipient list
-        }
-
-        function login() {
-            // Code to handle login
-        }
-
-        function adminAction(action) {
-            // Code to handle admin actions
-        }
-
-        function updateTransferOptions() {
-            // Code to update transfer options
-        }
-    </script>
-</body>
-</html>
+            // Populate user list for admin
+            function populateUserList() {
+                userList.innerHTML = ""; // Clear existing options
+                // Replace with actual logic to fetch user list
+                // For demonstration, adding sample users
+                const users = ["User1", "User2", "User3"];
+                users.forEach(user => {
+                    const option = document.createElement("option");
+                    option.text = user;
+                    userList.add(option);
+                });
+           
