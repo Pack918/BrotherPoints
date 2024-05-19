@@ -4,7 +4,7 @@ from tkinter import messagebox, ttk
 # Initialize current_user variable
 current_user = None
 
-# Function to authenticate user
+# Function to authenticate user!
 def authenticate(username, password):
     if username == "admin" and password == "12345":
         return "admin"
