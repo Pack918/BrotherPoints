@@ -37,26 +37,60 @@
     <div class="container">
         <h1>Fraternal Points Management System</h1>
         <div id="login-form">
-            <!-- Login form will be generated dynamically -->
+            <form id="loginForm">
+                <label for="username">Username:</label><br>
+                <input type="text" id="username" name="username"><br>
+                <label for="password">Password:</label><br>
+                <input type="password" id="password" name="password"><br><br>
+                <button type="submit">Login</button>
+            </form>
         </div>
         <div id="admin-panel" class="panel">
-            <!-- Admin panel content will be generated dynamically -->
+            <h2>Admin Panel</h2>
+            <label for="userList">Select User:</label><br>
+            <select id="userList" name="userList"></select><br>
+            <label for="points">Points:</label><br>
+            <input type="number" id="points" name="points"><br><br>
+            <button id="addPoints">Add Points</button>
+            <button id="removePoints">Remove Points</button><br><br>
+            <button id="logoutAdmin">Logout</button>
         </div>
         <div id="user-panel" class="panel">
-            <!-- User panel content will be generated dynamically -->
+            <h2>User Panel</h2>
+            <p>Welcome, <span id="loggedInUser"></span>!</p>
+            <p>Your balance: <span id="userBalance"></span></p>
+            <label for="recipient">Recipient:</label><br>
+            <select id="recipient" name="recipient"></select><br>
+            <label for="transferPoints">Points:</label><br>
+            <input type="number" id="transferPoints" name="transferPoints"><br><br>
+            <button id="transferButton">Transfer Points</button><br><br>
+            <button id="logoutUser">Logout</button>
         </div>
         <div id="leaderboard-panel" class="panel">
-            <!-- Leaderboard content will be generated dynamically -->
+            <h2>Leaderboard</h2>
+            <textarea id="leaderboardText" rows="10" cols="30" readonly></textarea>
         </div>
     </div>
     <script>
         // JavaScript Logic
         document.addEventListener("DOMContentLoaded", function() {
             // DOM elements
-            const loginForm = document.getElementById("login-form");
+            const loginForm = document.getElementById("loginForm");
             const adminPanel = document.getElementById("admin-panel");
+            const userList = document.getElementById("userList");
+            const pointsInput = document.getElementById("points");
+            const addPointsButton = document.getElementById("addPoints");
+            const removePointsButton = document.getElementById("removePoints");
+            const logoutAdminButton = document.getElementById("logoutAdmin");
             const userPanel = document.getElementById("user-panel");
+            const loggedInUserSpan = document.getElementById("loggedInUser");
+            const userBalanceSpan = document.getElementById("userBalance");
+            const recipientSelect = document.getElementById("recipient");
+            const transferPointsInput = document.getElementById("transferPoints");
+            const transferButton = document.getElementById("transferButton");
+            const logoutUserButton = document.getElementById("logoutUser");
             const leaderboardPanel = document.getElementById("leaderboard-panel");
+            const leaderboardText = document.getElementById("leaderboardText");
             const errorDiv = document.createElement("div");
             errorDiv.classList.add("error");
 
@@ -83,27 +117,15 @@
                 return username;
             }
 
-            // Login form submission
-            loginForm.addEventListener("submit", function(event) {
-                event.preventDefault();
-                const username = event.target.elements.username.value;
-                const password = event.target.elements.password.value;
-                const authenticatedUser = authenticate(username, password);
-                if (authenticatedUser) {
-                    hideAllPanels();
-                    if (authenticatedUser === "admin") {
-                        adminPanel.style.display = "block";
-                    } else {
-                        userPanel.style.display = "block";
-                    }
-                } else {
-                    showError("Invalid username or password");
-                }
-            });
-
-            // Add your further JavaScript logic here
-            // Such as handling points transfer, updating balances, etc.
-        });
-    </script>
-</body>
-</html>
+            // Populate user list for admin
+            function populateUserList() {
+                userList.innerHTML = ""; // Clear existing options
+                // Replace with actual logic to fetch user list
+                // For demonstration, adding sample users
+                const users = ["User1", "User2", "User3"];
+                users.forEach(user => {
+                    const option = document.createElement("option");
+                    option.text = user;
+                    userList.add(option);
+                });
+           
